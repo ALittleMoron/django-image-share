@@ -129,3 +129,6 @@ MyVenv/
 .dmypy.json
 dmypy.json
 mypy.ini
+
+#Django
+media/
