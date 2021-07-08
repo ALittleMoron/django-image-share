@@ -1,9 +1,14 @@
-from django.shortcuts import render
-from django.views.generic import DetailView, ListView
+from django.http import HttpRequest
+
+from django.shortcuts import render, HttpResponse
+from django.views.generic import DetailView, ListView, View
 
 
 class HomePage(ListView):
-    pass
+    template_name = 'imagesApp/homePage.html'
+
+    def get(self, request: HttpRequest) -> HttpResponse:
+        return render(request, self.template_name)
 
 
 class Account(DetailView):
