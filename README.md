@@ -1,4 +1,4 @@
-# django image Share
+# Django Image Share
 
 ## Кратко о проекте
 
