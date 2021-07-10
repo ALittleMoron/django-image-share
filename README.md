@@ -47,7 +47,7 @@
 
 ## Запуск проекта
 
-В проекте используется [petry](https://github.com/python-poetry/poetry) - менеджер зависимостей. Для его установки на OSX / Linuxosx / linux / bashonwindows используейте команду:
+В проекте используется [poetry](https://github.com/python-poetry/poetry) - менеджер зависимостей. Для его установки на OSX / Linuxosx / linux / bashonwindows используейте команду:
 
 ```bash
 curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/install-poetry.py | python -
