@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block extrastyle%}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static "myCSS/myCSS.css" %}"/>
+{% endblock %}
+
+
+{% block main %}
+<div class="container col-md-3 ">
+    <form class="form-3" method="POST">
+        {% csrf_token %}
+        <h1 style="text-align: center;">Регистрация</h1>
+        {{ form.as_p }}
+        <p style="text-align: center;"><button type='submit', class='btn btn-primary btm-block'>Зарегистрироваться</button></p>
+        <p style="text-align: center;"><a href="{% url "login" %}">или сразу войти</a></p>
+    </form>
+</div>
+{% endblock main %}
