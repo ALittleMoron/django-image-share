@@ -1,15 +1,47 @@
-from django.http import HttpRequest
+from typing import Union
 
-from django.shortcuts import render, HttpResponse
-from django.views.generic import DetailView, ListView, View
+from django.http import HttpRequest
+from django.shortcuts import (HttpResponse,
+                              HttpResponseRedirect,
+                              HttpResponsePermanentRedirect,
+                              redirect,
+                              render)
+from django.views.generic import (DetailView,
+                                  ListView,
+                                  View,
+                                  CreateView)
+from django.contrib.auth import logout
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from .forms import ImageForm, CustomAuthenticationForm
+
+
+def user_logout(request: HttpRequest) -> Union[HttpResponseRedirect, 
+                                               HttpResponsePermanentRedirect]:
+    logout(request)
+    return redirect('imagesApp.homePage')
+
+
+class UserLogin(LoginView):
+    template_name = 'imagesApp/login.html'
+    authentication_form = CustomAuthenticationForm
 
 
 class HomePage(ListView):
-    template_name = 'imagesApp/homePage.html'
+    template_name = "imagesApp/homePage.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
         return render(request, self.template_name)
 
+    def post(self, request: HttpRequest):
+        pass
 
-class Account(DetailView):
+
+class AddImage(CreateView):
+    form_class = ImageForm
+    template_name = 'imagesApp/addImage.html'
+
+
+class Account(LoginRequiredMixin, View):
     pass
