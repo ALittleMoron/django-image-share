@@ -42,7 +42,7 @@
         <a href="{% url 'imagesApp.logout' %}" type="button" class="btn btn-danger me-2">Выйти</a>
         {% else %}
         <a href="{% url 'imagesApp.login' %}" type="button" class="btn btn-outline-light me-2">Войти</a>
-        <a type="button" class="btn btn-warning">Зарегистрироваться</a>
+        <a href="{% url 'imagesApp.register' %}" type="button" class="btn btn-warning">Зарегистрироваться</a>
         {% endif %}
       </div>
     </div>

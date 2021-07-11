@@ -9,12 +9,13 @@ from django.shortcuts import (HttpResponse,
 from django.views.generic import (DetailView,
                                   ListView,
                                   View,
-                                  CreateView)
+                                  CreateView,
+                                  FormView)
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .forms import ImageForm, CustomAuthenticationForm
+from .forms import ImageForm, CustomAuthenticationForm, CustomUserCreationForm
 
 
 def user_logout(request: HttpRequest) -> Union[HttpResponseRedirect, 
@@ -26,6 +27,12 @@ def user_logout(request: HttpRequest) -> Union[HttpResponseRedirect,
 class UserLogin(LoginView):
     template_name = 'imagesApp/login.html'
     authentication_form = CustomAuthenticationForm
+
+
+class UserRegister(CreateView, FormView):
+    template_name = 'imagesApp/register.html'
+    form_class = CustomUserCreationForm
+    success_url = '/'
 
 
 class HomePage(ListView):
