@@ -16,6 +16,7 @@ from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from .forms import ImageForm, CustomAuthenticationForm, CustomUserCreationForm
+from .models import ImageWithContent
 
 
 def user_logout(request: HttpRequest) -> Union[HttpResponseRedirect, 
@@ -39,10 +40,14 @@ class HomePage(ListView):
     template_name = "imagesApp/homePage.html"
 
     def get(self, request: HttpRequest) -> HttpResponse:
-        return render(request, self.template_name)
+        query = ImageWithContent.objects.filter(is_published=True).all()
+        return render(request, self.template_name, context={'images': query})
 
     def post(self, request: HttpRequest):
-        pass
+        search = request.POST.get('search')
+        query = ImageWithContent.objects.filter(is_published=True,
+                                                title__icontains=search).all()
+        return render(request, self.template_name, context={'images': query})
 
 
 class AddImage(CreateView):
