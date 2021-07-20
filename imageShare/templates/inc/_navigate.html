@@ -23,10 +23,10 @@
         </li>
         <li><a href="#" class="nav-link px-2 text-white">Популярное</a></li>
         <li><a href="#" class="nav-link px-2 text-white">Новое</a></li>
-        <li><a href="{% url 'imagesApp.addImage' %}" class="nav-link px-2 text-white">Написать новость</a></li>
+        <li><a href="{% url 'imagesApp.addImage' %}" class="nav-link px-2 text-white">Добавить фото</a></li>
       </ul>
 
-      <form method="POST" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
+      <form method="POST" action="{% url 'imagesApp.homePage' %}" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3">
         {% csrf_token %}
         <input
           type="search"

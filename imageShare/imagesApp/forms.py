@@ -42,9 +42,9 @@ class CustomUserCreationForm(UserCreationForm):
 class ImageForm(forms.ModelForm):
     class Meta:
         model = ImageWithContent
-        fields = '__all__'
+        fields = ['title', 'description', 'image', 'tags']
         widgets = {
             'title': forms.TextInput(attrs={"class": 'form-control'}),
-            'content': forms.Textarea(attrs={"class": 'form-control'}),
-            'category': forms.Select(attrs={"class": 'form-control'}),
+            'description': forms.Textarea(attrs={"class": 'form-control'}),
+            'tags': forms.TextInput(attrs={"class": 'form-control'}),
         }

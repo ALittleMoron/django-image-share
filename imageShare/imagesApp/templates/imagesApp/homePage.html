@@ -8,17 +8,15 @@
 {% block main %}
   <div class="container">
     <div class="row">
-    {% for image in images %}
-      <div class="col-lg-3 col-md-4 col-xs-6 card" style="width: 18rem;">
-        <img src="{{image.image.url}}" class="card-img-top" alt="...">
-        <div class="card-body">
-          <h5 class="card-title">{{image.title}}</h5>
-          <p class="card-text">{{image.description|truncatewords:50}}</p>
-          <a href="#" class="btn btn-primary">Go somewhere</a>
-        </div>
-  {% empty %}
-    <p>К сожалению, по вашему запросу не были обнаружены никакие записи...</p>
-  {% endfor %}
+        {% for image in images %}
+      <div class="col-12 col-md-4 my-2" style="text-align: center;">
+        <a href="{% url 'imagesApp.detail' image.pk %}" class="text-align: center">
+          <img class="card-img-top" height="220px" style="width: auto;" src="{{image.image.url}}" alt="{{image.title}}">
+        </a> 
+      </div>
+        {% empty %}
+          <p>К сожалению, по вашему запросу не были обнаружены никакие записи...</p>
+        {% endfor %}
     </div>
   </div>
 {% endblock main %}

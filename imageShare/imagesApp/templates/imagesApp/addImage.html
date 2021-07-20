@@ -2,5 +2,42 @@
 {% load static %}
 
 {% block title %}
-  Домашняя страница
+
+Домашняя страница
+
+
+
 {% endblock title %}
+
+
+{% block extrastyle%}
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="{% static "myCSS/myCSS.css" %}"/>
+{% endblock %}
+
+
+{% block main %}
+
+<div class="container col-md-3 ">
+    <form class="form-3" method="POST" action="{% url 'imagesApp.addImage' %}">
+        {% csrf_token %}
+        {{ form.non_field.errors}}
+        <h1 style="text-align: center;">Добавление новости</h1>
+        {% for field in form %}
+            <div class="form-group mt-1 md-2">
+                {{ field.label_tag }}
+                {{ field }}
+                <div class="invalid-feedback">
+                    {{ field.errors }}
+                </div>
+            </div>
+        {% endfor %}
+        <div>
+            <button type="success" class="btn btn-outline-primary btn-lg mt-3">Добавить новость</button>
+            <a class="btn btn-outline-primary btn-lg mt-3" href="{% url 'imagesApp.homePage' %}">Вернуться на главную страницу</a>
+        </div>
+    </form>
+</div>
+{% endblock main %}
