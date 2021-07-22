@@ -39,8 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
     'taggit',
     'debug_toolbar',
+    
     'imagesApp.apps.ImagesappConfig',
 ]
 
@@ -114,6 +116,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 
 # Auth const
+
+LOGIN_URL = "/login"
 
 LOGIN_REDIRECT_URL = 'imagesApp.homePage'
 
