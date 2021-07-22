@@ -11,6 +11,7 @@ from django.views.generic import (DetailView,
                                   View,
                                   CreateView,
                                   FormView)
+from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -54,11 +55,19 @@ class HomePage(ListView):
 class AddImage(LoginRequiredMixin, CreateView):
     form_class = ImageForm
     template_name = 'imagesApp/addImage.html'
-    success_url = '/'
     
-    def form_valid(self, form: ImageForm):
+    def form_valid(self, form):
         form.instance.publisher = self.request.user
-        return super().form_valid(form)
+        self.object = form.save()
+        return HttpResponseRedirect(self.object.get_absolute_url())
+    
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            messages.error('Некорректные данные в форме!')
+            return self.form_invalid(form)
 
 
 class ImageDetail(DetailView):

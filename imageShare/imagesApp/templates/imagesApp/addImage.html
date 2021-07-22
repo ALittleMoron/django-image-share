@@ -21,10 +21,10 @@
 {% block main %}
 
 <div class="container col-md-3 ">
-    <form class="form-3" method="POST" action="{% url 'imagesApp.addImage' %}">
+    <form class="form-3" method="POST" action="{% url 'imagesApp.addImage' %}" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field.errors}}
-        <h1 style="text-align: center;">Добавление новости</h1>
+        <h1 style="text-align: center;">Добавление фото</h1>
         {% for field in form %}
             <div class="form-group mt-1 md-2">
                 {{ field.label_tag }}
@@ -35,9 +35,14 @@
             </div>
         {% endfor %}
         <div>
-            <button type="success" class="btn btn-outline-primary btn-lg mt-3">Добавить новость</button>
-            <a class="btn btn-outline-primary btn-lg mt-3" href="{% url 'imagesApp.homePage' %}">Вернуться на главную страницу</a>
+            <p style="text-align: center;">
+              <button type="submit" class="btn btn-success btn-lg mt-3">Добавить фото</button>
+            </p>
+            <p style="text-align: center;">
+              <a class="mt-3" href="{% url 'imagesApp.homePage' %}">или вернуться на главную</a>
+            </p>
         </div>
     </form>
 </div>
+
 {% endblock main %}

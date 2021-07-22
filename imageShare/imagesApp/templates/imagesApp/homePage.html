@@ -10,7 +10,7 @@
     <div class="row">
         {% for image in images %}
       <div class="col-12 col-md-4 my-2" style="text-align: center;">
-        <a href="{% url 'imagesApp.detail' image.pk %}" class="text-align: center">
+        <a href="{{image.get_absolute_url}}" class="text-align: center">
           <img class="card-img-top" height="220px" style="width: auto;" src="{{image.image.url}}" alt="{{image.title}}">
         </a> 
       </div>
