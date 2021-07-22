@@ -49,6 +49,9 @@ class HomePage(ListView):
         search = request.POST.get('search')
         query = ImageWithContent.objects.filter(is_published=True,
                                                 title__icontains=search).all()
+        if query.count() == 0:
+            query = ImageWithContent.objects.filter(is_published=True,
+                                                    tags__name=search).all()
         return render(request, self.template_name, context={'images': query})
 
 
