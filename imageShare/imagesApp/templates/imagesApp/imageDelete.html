@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+
+Удаление фото
+
+{% endblock title %}
+
+
+{% block main %}
+
+<div class="form-group mx-auto">
+  <h2 class="text-center">
+    Вы собираетесь <span class="text-danger">удалить</span>: "<i>{{ image }}</i>"
+  </h2>
+  <p class="text-center">Вы уверены, что хотите это сделать?</p>
+  <div class="form-group">
+    <form
+      method="post"
+      class="d-flex flex-column align-items-center justify-content-center"
+      >
+      {% csrf_token %}
+      <div class="row">
+        <div class="col">
+          <a href="{% url 'imagesApp.detail' image.pk %}" class="btn btn-primary">Назад</a>
+        </div>
+        <div class="col">
+          <button type="submit" class="btn btn-danger">Удалить</button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock main %}

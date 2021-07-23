@@ -2,22 +2,27 @@ from typing import Union
 
 from django.http import HttpRequest
 from django.shortcuts import (HttpResponse,
-                              HttpResponseRedirect,
                               HttpResponsePermanentRedirect,
+                              HttpResponseRedirect,
+                              get_object_or_404,
                               redirect,
                               render)
 from django.views.generic import (DetailView,
                                   ListView,
                                   View,
                                   CreateView,
+                                  UpdateView,
+                                  DeleteView,
                                   FormView)
 from django.contrib import messages
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
-from django.contrib.auth.mixins import LoginRequiredMixin
-from django.urls import reverse_lazy
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.core.exceptions import PermissionDenied
+from django.urls import reverse, reverse_lazy
 
-from .forms import ImageForm, CustomAuthenticationForm, CustomUserCreationForm
+from .forms import (ImageForm, ImageUpdateForm, CustomAuthenticationForm, 
+                    CustomUserCreationForm)
 from .models import ImageWithContent
 
 
@@ -77,6 +82,31 @@ class ImageDetail(DetailView):
     model = ImageWithContent
     template_name = "imagesApp/imageDetail.html"
     context_object_name = 'image'
+
+
+class UserIsPublisher(UserPassesTestMixin):
+    def get_image(self):
+        return get_object_or_404(ImageWithContent, pk=self.kwargs.get('pk'))
+
+    def test_func(self):
+        if self.request.user.is_authenticated:
+            return self.request.user == self.get_image().publisher
+        else:
+            raise PermissionDenied('Извините, у вас нет доступа к этому разделу')
+
+
+class ImageUpdate(UserIsPublisher, UpdateView):
+    model = ImageWithContent
+    form_class = ImageUpdateForm
+    template_name = 'imagesApp/imageUpdate.html'
+    context_object_name = 'image'
+
+
+class ImageDelete(UserIsPublisher, DeleteView):
+    model = ImageWithContent
+    template_name = 'imagesApp/imageDelete.html'
+    context_object_name = 'image'
+    success_url = '/'
 
 
 class Account(LoginRequiredMixin, View):

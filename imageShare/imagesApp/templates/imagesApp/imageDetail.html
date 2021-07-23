@@ -13,11 +13,11 @@
 
 <div class="mx-auto">
   <h1 class="text-center">{{ photo.title }}</h1>
-  <p class="text-center fw-light">Uploaded on: {{image.created_at}} <br> By {{image.publisher.username}}</p>
+  <p class="text-center fw-light">Загружено: {{image.created_at}} <br> Автор: {{image.publisher.username}}</p>
   {% if user == image.publisher %}
     <p class="text-center">
-      <span><a href="" class="text-primary px-2">Update</a></span>
-      <span><a href="" class="text-danger px-2">Delete</a></span>
+      <span><a href="{% url 'imagesApp.update' image.pk %}" class="text-primary px-2">Изменить</a></span>
+      <span><a href="{% url 'imagesApp.delete' image.pk %}" class="text-danger px-2">Удалить</a></span>
     </p>
   {% endif %}
 </div>
@@ -26,7 +26,7 @@
     <img src="{{image.image.url}}" alt="" width="95%" />
   </div>
   <div class="col-md-4">
-    <h4>More about this photo:</h4>
+    <h4>Информация о фото:</h4>
     <ul class="list-group list-group-horizontal-lg list-unstyled py-4">
       {% for tag in image.tags.all %}
         <li><a href="#" class="btn btn-sm list-group-item list-group-item-primary">{{tag.name}}</a></li>
