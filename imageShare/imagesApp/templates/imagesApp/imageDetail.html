@@ -8,6 +8,11 @@
 {% endblock title %}
 
 
+{% block extrastyle%}
+
+
+{% endblock %}
+
 
 {% block main %}
 
@@ -33,6 +38,7 @@
       {% endfor %}
     </ul>
     <p>{{ image.description }}</p>
+    <a href="{{image.image.url}}" class="mt-2 btn btn-success" download><img src="{% static 'downloads.png' %}"> Скачать фото</a>
   </div>
 </div>
 
