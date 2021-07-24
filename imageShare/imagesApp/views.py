@@ -45,11 +45,9 @@ class UserRegister(CreateView, FormView):
 
 class HomePage(ListView):
     template_name = "imagesApp/homePage.html"
-
-    def get(self, request: HttpRequest) -> HttpResponse:
-        query = ImageWithContent.objects.filter(is_published=True).order_by('?').all()
-        return render(request, self.template_name, context={'images': query})
-
+    queryset = ImageWithContent.objects.filter(is_published=True).order_by('?').all()
+    context_object_name = 'images'
+    
     def post(self, request: HttpRequest) -> HttpResponse:
         search = request.POST.get('search')
         query = ImageWithContent.objects.filter(is_published=True,
