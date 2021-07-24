@@ -47,6 +47,7 @@ class HomePage(ListView):
     template_name = "imagesApp/homePage.html"
     queryset = ImageWithContent.objects.filter(is_published=True).order_by('?').all()
     context_object_name = 'images'
+    paginate_by = 12
     
     def post(self, request: HttpRequest) -> HttpResponse:
         search = request.POST.get('search')
