@@ -45,7 +45,7 @@ class UserRegister(CreateView, FormView):
 
 class HomePage(ListView):
     template_name = "imagesApp/homePage.html"
-    queryset = ImageWithContent.objects.filter(is_published=True).order_by('?').all()
+    queryset = ImageWithContent.objects.filter(is_published=True).order_by('created_at').all()
     context_object_name = 'images'
     paginate_by = 12
     
