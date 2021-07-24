@@ -18,7 +18,7 @@
 
 <div class="mx-auto">
   <h1 class="text-center">{{ photo.title }}</h1>
-  <p class="text-center fw-light">Загружено: {{image.created_at}} <br> Автор: {{image.publisher.username}}</p>
+  <p class="text-center fw-light">Загружено: {{image.created_at|date:"d.m.Y"}} <br> Автор: {{image.publisher.username}}</p>
   {% if user == image.publisher %}
     <p class="text-center">
       <span><a href="{% url 'imagesApp.update' image.pk %}" class="text-primary px-2">Изменить</a></span>
