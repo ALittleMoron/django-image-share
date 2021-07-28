@@ -5,17 +5,25 @@
   Домашняя страница
 {% endblock title %}
 
+
 {% block main %}
   <div class="container">
-    <div class="row">
+    <div class="row justify-content-md-center" style="display: flex;">
         {% for image in images %}
-      <div class="col-12 col-md-4 my-2" style="text-align: center;">
+      <div class="col- my-1" style="text-align: center; flex: 33.33%; max-width: 300px; vertical-align: middle;">
+       <div class='card'>
         <a href="{{image.get_absolute_url}}" class="text-align: center">
-          <img class="card-img-top" height="220px" style="width: auto;" src="{{image.image.url}}" alt="{{image.title}}">
-        </a> 
+          <img class="card-img-top" height="220px" style="height: auto;" src="{{image.image.url}}" alt="{{image.title}}">
+        </a>
+        <div class="card-body">
+          <h5 class="card-title">{{image.title|truncatewords:10}}</h5>
+          <p style="text-align: justify;" class="card-text">{{image.description|truncatewords:50}}</p>
+        </div>
+       </div> 
       </div>
         {% empty %}
-          <p>К сожалению, по вашему запросу не были обнаружены никакие записи...</p>
+          <h3 class="my-5" style="text-align: center;">К сожалению, по вашему запросу не были обнаружены никакие записи...</h3>
+          <img style="width: 400px; height: auto;" src="{% static 'sad.png' %}">
         {% endfor %}
     </div>
   </div>
