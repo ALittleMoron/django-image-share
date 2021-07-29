@@ -39,7 +39,7 @@
 
       <div class="text-end">
         {% if request.user.is_authenticated %}
-        <a type="button" class="btn btn-outline-light me-2">Личный кабинет</a>
+        <a href="{% url 'imagesApp.account' request.user.username %}" type="button" class="btn btn-outline-light me-2">Личный кабинет</a>
         <a href="{% url 'imagesApp.logout' %}" type="button" class="btn btn-danger me-2">Выйти</a>
         {% else %}
         <a href="{% url 'imagesApp.login' %}" type="button" class="btn btn-outline-light me-2">Войти</a>

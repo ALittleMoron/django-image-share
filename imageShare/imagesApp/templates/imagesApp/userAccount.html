@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block main %}
+<div class="container">
+  <div class="row my-2 border">
+    <div class="col">
+     asgsagsagsag
+    </div>
+    <div class="col border" style="max-width: 280px; text-aling: center;">
+      {% if user_icon %}
+        <img>
+      {% else %}
+        <img align="middle" style="height: auto;" src="{% static 'defaultUser.png' %}">
+      {% endif %}
+    </div>
+    <div class="col">
+      asgsagsagsaasg
+    </div>
+  </div>
+  <div class="row border justify-content-md-center">
+    <div class="row">
+      <p style="text-align: center; font-size: 25px;">Все работы пользователя {{user.username}}:</p>
+    </div>
+    {% for image in images %}
+      <div class="col-md-8" style="text-align: center; flex: 33.33%; max-width: 100px; vertical-align: middle;">
+        <a href="{{image.get_absolute_url}}" class="text-align: center">
+          <img class="card-img-top my-2" height="220px" style="height: auto;" src="{{image.image.url}}" alt="{{image.title}}">
+        </a>
+      </div>
+    {% empty %}
+      <h3 class="my-5" style="text-align: center;">Вы пока что ничего не выкладывали...</h3>
+      <img class="mb-4" style="width: 400px; height: auto;" src="{% static 'sad.png' %}">
+    {% endfor %}
+  </div>
+</div>
+{% endblock main %}

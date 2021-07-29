@@ -6,7 +6,7 @@ from .views import (HomePage, Account, AddImage, UserLogin, user_logout,
 
 urlpatterns = [
     path('', HomePage.as_view(), name='imagesApp.homePage'),
-    path('account/<str:user_name>', Account.as_view(), name='imagesApp.account'),
+    path('account/<str:username>', Account.as_view(), name='imagesApp.account'),
     path('image/<int:pk>', ImageDetail.as_view(), name='imagesApp.detail'),
     path('add-image', AddImage.as_view(), name='imagesApp.addImage'),
     path('image/<int:pk>/update', ImageUpdate.as_view(), name='imagesApp.update'),

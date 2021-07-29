@@ -15,7 +15,7 @@ from django.views.generic import (DetailView,
                                   DeleteView,
                                   FormView)
 from django.contrib import messages
-from django.contrib.auth import logout
+from django.contrib.auth import logout, get_user_model
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.exceptions import PermissionDenied
@@ -65,7 +65,7 @@ class UserRegister(CreateView, FormView):
     """
     template_name = 'imagesApp/register.html'
     form_class = CustomUserCreationForm
-    success_url = '/'
+    success_url = reverse_lazy('imagesApp.login')
 
 
 class HomePage(ListView):
@@ -154,5 +154,22 @@ class ImageDelete(UserIsPublisher, DeleteView):
     success_url = '/'
 
 
-class Account(LoginRequiredMixin, View):
-    pass
+class Account(LoginRequiredMixin, ListView):
+    model = get_user_model()
+    template_name = "imagesApp/userAccount.html"
+    context_object_name = 'user'
+    paginate_by = 24
+
+    # def get_queryset(self):
+    #     publisher = self.request
+        
+    #     return 
+
+    def get_context_data(self, *, object_list=None, **kwargs):
+        UserModel = self.model
+        context = super().get_context_data(**kwargs)
+        user = UserModel.objects.get(username=self.kwargs['username'])
+        images = ImageWithContent.objects.filter(publisher__username=self.kwargs['username']).order_by('created_at').all()
+        context['user'] = user
+        context['images'] = images
+        return context
