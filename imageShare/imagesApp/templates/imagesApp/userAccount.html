@@ -2,6 +2,14 @@
 {% load static %}
 {% load statisticData %}
 
+
+{% block title %}
+
+Аккаунт {{user.username}}
+
+{% endblock title %}
+
+
 {% block main %}
 <div class="container">
   <div class="row my-2 border">
@@ -18,14 +26,21 @@
         <img align="middle" style="height: auto;" src="{% static 'defaultUser.png' %}">
       {% endif %}
     </div>
-    <div class="col">
-      asgsagsagsaasg
-    </div>
-  </div>
-  <div class="row border justify-content-md-center">
-    <div class="row">
-      <p style="text-align: center; font-size: 25px;">Все работы пользователя {{user.username}}:</p>
-    </div>
+    <div class="col mx-3 my-3 align-items-center">
+        {% if request.user.username == user.username %}
+          {% if user.is_superuser %}
+            <a href="{% url 'admin:index' %}" class="btn btn-primary d-block mb-2">Админ-панель</a>
+          {% endif%}
+          <a href="{% url 'imagesApp.addImage' %}" class="btn btn-primary d-block mb-2">Добавить фото</a>
+        {% else %}
+          <h3 class='mt-5 text-center'>Содержимое скрыто, так как вы не являетесь владельцем этого аккаунта</h3>
+        {% endif %}
+        </div>
+      </div>
+      <div class="row border justify-content-md-center">
+        <div class="row">
+          <p style="text-align: center; font-size: 25px;">Все работы пользователя {{user.username}}:</p>
+        </div>
     {% for image in images %}
       <div class="col-md-8" style="text-align: center; flex: 33.33%; max-width: 100px; vertical-align: middle;">
         <a href="{{image.get_absolute_url}}" class="text-align: center">
