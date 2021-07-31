@@ -1,12 +1,15 @@
+from typing import Dict
+
 from django import template
+
 from imagesApp.models import ImageStatistic, ImageWithContent
 
 register = template.Library()
 
 
 @register.inclusion_tag('inc/_userStatistic.html')
-def get_user_stats(user_id):
-    query = ImageWithContent.objects.filter(publisher__pk=user_id)
+def get_user_stats(user_id: str) -> Dict[str, Dict[str, int]]:
+    query = ImageWithContent.objects.filter(publisher__pk=user_id).select_related('statistic')
     images_count = query.count()
     views_on_images = 0
     all_likes = 0
