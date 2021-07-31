@@ -97,7 +97,7 @@ class AddImage(LoginRequiredMixin, CreateView):
     form_class = ImageForm
     template_name = 'imagesApp/addImage.html'
     
-    def form_valid(self, form) -> HttpResponseRedirect:
+    def form_valid(self, form: ImageForm) -> HttpResponseRedirect:
         """ Переопределенный метод класса CreateView для добавление автора
         на этапе, когда форма провалидировалась. 
         """
@@ -122,12 +122,14 @@ class ImageDetail(DetailView):
     model = ImageWithContent
     template_name = "imagesApp/imageDetail.html"
     context_object_name = 'image'
-
+    
     def get_object(self, queryset=None):
         """ Переопределенный метод клааса DetailView для увеличения числа просмотра записи """
         item = super().get_object(queryset=queryset)
-        item.statistic.incrementViews()
+        if self.request.user.username != item.publisher.username:
+            item.statistic.incrementViews()
         return item
+
 
 class UserIsPublisher(UserPassesTestMixin):
     """ Класс проверки принадлежности пользователя к посту с картинкой. """
@@ -159,20 +161,15 @@ class ImageDelete(UserIsPublisher, DeleteView):
     success_url = '/'
 
 
-class Account(LoginRequiredMixin, ListView):
-    model = get_user_model()
+class Account(ListView):
+    model = ImageWithContent
     template_name = "imagesApp/userAccount.html"
     context_object_name = 'user'
     paginate_by = 24
 
-    # def get_queryset(self):
-    #     publisher = self.request
-        
-    #     return 
-
     def get_context_data(self, *, object_list=None, **kwargs):
-        UserModel = self.model
         context = super().get_context_data(**kwargs)
+        UserModel = get_user_model()
         user = UserModel.objects.get(username=self.kwargs['username'])
         images = ImageWithContent.objects.filter(publisher__username=self.kwargs['username']).order_by('created_at').all()
         context['user'] = user
