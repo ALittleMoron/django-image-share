@@ -1,5 +1,11 @@
 from typing import Optional, Union
 
+from django.db.models import Q
+from django.contrib import messages
+from django.contrib.auth import logout, get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.views import LoginView
+from django.core.exceptions import PermissionDenied
 from django.http import HttpRequest
 from django.shortcuts import (HttpResponse,
                               HttpResponsePermanentRedirect,
@@ -7,6 +13,7 @@ from django.shortcuts import (HttpResponse,
                               get_object_or_404,
                               redirect,
                               render)
+from django.urls import reverse, reverse_lazy
 from django.views.generic import (DetailView,
                                   ListView,
                                   View,
@@ -14,12 +21,6 @@ from django.views.generic import (DetailView,
                                   UpdateView,
                                   DeleteView,
                                   FormView)
-from django.contrib import messages
-from django.contrib.auth import logout, get_user_model
-from django.contrib.auth.views import LoginView
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from django.core.exceptions import PermissionDenied
-from django.urls import reverse, reverse_lazy
 
 from .forms import (ImageForm, ImageUpdateForm, CustomAuthenticationForm, 
                     CustomUserCreationForm)
@@ -84,11 +85,11 @@ class HomePage(ListView):
         названию фото и тэгам.
         """
         search = request.POST.get('search')
-        query = ImageWithContent.objects.filter(is_published=True,
-                                                title__icontains=search).all()
-        if query.count() == 0:
-            query = ImageWithContent.objects.filter(is_published=True,
-                                                    tags__name=search).all()
+        query = ImageWithContent.objects.filter(
+            Q(is_published=True),
+            Q(title__icontains=search) | Q(tags__name=search)
+        )
+
         return render(request, self.template_name, context={'images': query})
 
 
