@@ -1,0 +1,5 @@
+<ul class="list-group list-group-flush">
+  {% for stat_title, stat_value in stats.items %}
+    <li class="list-group-item text-center">{{stat_title}}: {{stat_value}}</li>
+  {% endfor %}
+</ul>

@@ -1,12 +1,15 @@
 {% extends 'base.html' %}
 {% load static %}
-
+{% load statisticData %}
 
 {% block main %}
 <div class="container">
   <div class="row my-2 border">
-    <div class="col">
-     asgsagsagsag
+    <div class="col mx-3 my-3">
+      <h4 class="text-center">Статистика пользователя</h4>
+      
+      {% get_user_stats user.pk %}
+
     </div>
     <div class="col border" style="max-width: 280px; text-aling: center;">
       {% if user_icon %}

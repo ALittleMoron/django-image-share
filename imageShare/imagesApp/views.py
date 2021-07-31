@@ -123,6 +123,11 @@ class ImageDetail(DetailView):
     template_name = "imagesApp/imageDetail.html"
     context_object_name = 'image'
 
+    def get_object(self, queryset=None):
+        """ Переопределенный метод клааса DetailView для увеличения числа просмотра записи """
+        item = super().get_object(queryset=queryset)
+        item.statistic.incrementViews()
+        return item
 
 class UserIsPublisher(UserPassesTestMixin):
     """ Класс проверки принадлежности пользователя к посту с картинкой. """
