@@ -33,6 +33,10 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    # тема для админ-панели. Инициализируется до django.contrib.admin для корректной работы.
+    'admin_interface',
+    'colorfield',
+    
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -45,6 +49,12 @@ INSTALLED_APPS = [
     
     'imagesApp.apps.ImagesappConfig',
 ]
+
+# Настройки темы админ-панели
+
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+SILENCED_SYSTEM_CHECKS = ['security.W019']
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
